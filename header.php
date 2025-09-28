@@ -17,7 +17,7 @@
         <div class="container py-[36px]">
 
 
-            <div class="navbar mx-5  flex justify-between items-center gap-x-[10px] md:gap-x-[70px]">
+            <div class="navbar  mx-5 z-100 flex justify-between items-center gap-x-[10px] md:gap-x-[70px]">
 
                 <!-- wordpress logo -->
 
@@ -35,7 +35,7 @@
 
 
 
-                <nav class="rrf-menu ml-auto">
+                <nav class="rrf-menu hidden md:block ml-auto ">
                     <?php
                     wp_nav_menu(array(
                         'theme_location' => 'primary'
@@ -45,7 +45,7 @@
 
 
 
-                <div class="relative md:hidden">
+                <div class="relative  md:hidden">
                     <input type="checkbox" id="menu-toggle" class="peer hidden">
 
                     <label for="menu-toggle" class="cursor-pointer relative  z-101">
@@ -53,10 +53,10 @@
                     </label>
 
                     <ul class="translate-x-full peer-checked:translate-0 duration-300 ease-in-out fixed top-[90px] bg-[#FFFCF4]/80  right-0 w-[100%] h-screen z-100 pl-4">
-                        <li class=" py-2 my-2">menu 1</li>
-                        <li class="py-2 my-2">menu 2</li>
-                        <li class="py-2 my-2">menu 3</li>
-                        <li class="py-2 my-2">menu 4</li>
+                        <li class=" py-2 my-4">menu 1</li>
+                        <li class="py-2 my-4">menu 2</li>
+                        <li class="py-2 my-4">menu 3</li>
+                        <li class="py-2 my-4">menu 4</li>
 
                     </ul>
                 </div>

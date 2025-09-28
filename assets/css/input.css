@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+
+
 .rrf-menu>div>ul {
     @apply flex items-center;
 }

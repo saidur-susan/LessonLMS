@@ -3,7 +3,7 @@ function lessonlms_theme_files()
 {
 
     //link with css
-    wp_enqueue_style('output-css', get_template_directory_uri() . './assets/css/output.css');
+    wp_enqueue_style('output-css', get_template_directory_uri() . '/assets/css/output.css');
 
     //main url css
     wp_enqueue_style('main-style', get_stylesheet_uri());
@@ -13,6 +13,8 @@ function lessonlms_theme_files()
     // wp_enqueue_style('font2-css', 'https://fonts.gstatic.com', array(), '1.1.0');
 
     wp_enqueue_style('main-font-css', 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap', '1.1.0');
+
+    wp_enqueue_style('slick-core-css', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css', array(), '1.9.0');
 
     wp_enqueue_style('slick-css', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css', array(), '1.9.0');
     //font awesome css
@@ -29,8 +31,12 @@ function lessonlms_theme_files()
 
     //main js
 
-    // wp_enqueue_scripts('main-js', get_template_directory_uri() . './assets/js/script.js');
-
+    wp_enqueue_script(
+        'main-js',
+        get_template_directory_uri() . '/assets/js/script.js',
+        array('jquery', 'slick-js'),
+        '1.1.0'
+    );
 }
 add_action("wp_enqueue_scripts", "lessonlms_theme_files");
 ?>
@@ -498,6 +504,35 @@ function lessonlms_register_sidebar()
     ));
 }
 add_action('widgets_init', 'lessonlms_register_sidebar');
+
+
+// Post Type Register
+
+function lessonlms_register_course()
+{
+    register_post_type(
+        'course',
+        array(
+            'labels'      => array(
+                'name'          => __('Courses', 'lessonlms'),
+                'singular_name' => __('Course', 'lessonlms'),
+                'add_new' => __('Add New Course', 'lessonlms'),
+                'add_new_item' => __('Add New Course', 'lessonlms'),
+                'edit-item' => __('Edit Course', 'lessonlms'),
+                'view-item' => __('View Course', 'lessonlms'),
+                'not_found' => __('No Course found', 'lessonlms'),
+                'search_items' => __('Search Course', 'lessonlms'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array('slug' => 'course'),
+            'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+            'menu_icon' => 'dashicons-book',
+        )
+    );
+}
+
+add_action('init', 'lessonlms_register_course')
 
 ?>
 

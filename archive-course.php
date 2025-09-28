@@ -1,33 +1,19 @@
-<!-- services section starts here -->
-<div class="container mx-auto py-[40px] md:py-[200px] ">
+<?php get_header(); ?>
+<div class="container mx-auto py-[40px] md:py-[100px] px-4">
 
 
 
 
-    <div class="relative mx-5">
-        <h2 class="sen text-[38px] leading-[48px] tracking-[0.76px] font-bold mb-[16px]">Our popular courses</h2>
+    <div class="mx-auto">
+        <h2 class="sen text-[38px] leading-[48px] tracking-[0.76px] font-bold mb-[16px]">All Courses</h2>
 
 
-        <p class="poppins text-[18px] leading-[30px] text-[#5F5B53] mb-[55px] max-w-[450px]"> Build new skills with new trendy courses and shine for the next future career.</p>
-
-        <!-- slider button -->
-        <div class="absolute top-10 right-0 flex gap-4 ">
-            <div class="bg-[#FFFFFF]  your-prev-btn group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFB900 " class="group-hover:stroke-white size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
-            </div>
-
-            <div class="bg-[#FFFFFF] your-next-btn group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFB900 " class="group-hover:stroke-white size-6 rotate-180">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
-            </div>
-        </div>
-
+        <p class="poppins text-[18px] leading-[30px] text-[#5F5B53] mb-[55px] max-w-[450px]"> Browse our complete
+            collection of coutses and find the perfect one for your career growth.</p>
     </div>
 
-    <!-- services card stars here -->
     <div class="slicks">
-        <div class="courses-wrapper overflow-hidden flex flex-col items-center md:flex-row gap-[30px] ">
+        <div class="courses-wrapper flex justify-between flex-wrap items-center flex-col md:flex-row gap-y-[20px] md:gap-x-[20px] ">
 
             <?php
             $courses = new WP_Query(array(
@@ -70,7 +56,7 @@
                             <div class="flex justify-between items-center ">
                                 <h3 class="poppins text-[18px] font-semibold leading-[30px] text-[#171100] ">$<?php echo esc_html($price); ?></h3>
                                 <div class="">
-                                    <a class="poppins bg-[#171100] hover:bg-[#FFB900] text-[18px] leading-[30px] px-4 h-[50px] rounded-full flex justify-center items-center text-white" href="">Book Now</a>
+                                    <a class="poppins bg-[#171100] hover:bg-[#FFB900] text-[18px] leading-[30px] px-4 h-[50px] rounded-full flex justify-center items-center text-white" href="<?php echo get_permalink(); ?>">Book Now</a>
                                 </div>
 
 
@@ -88,14 +74,50 @@
         </div>
     </div>
 
+    <!-- card end here -->
 
-    <div class=" mx-5">
-        <div class="flex justify-end items-center pr-[30px]">
-            <a class="poppins bg-[#FFB900] hover:bg-black text-[18px] leading-[30px] px-4 h-[50px] rounded-full flex justify-center items-center text-white mt-8 " href="<?php echo get_post_type_archive_link('course'); ?> ">See all Course</a>
+
+    <!-- next page buttons -->
+    <div class=" next-page-buttons mt-8 w-full flex gap-x-4  justify-center items-center">
+        <?php the_posts_pagination(array(
+            'mid_size' => 2,
+            'prev_text' => __('Prev', 'lesonlms'),
+            'next_text' => __('Next', 'lesonlms')
+        )); ?>
+        <div>
+            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px] text-black hover:text-white font-bold"
+                href="#">1
+            </a>
         </div>
 
+        <div>
+            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px] text-black hover:text-white font-bold"
+                href="#">2
+            </a>
+        </div>
+
+        <div>
+            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px] text-black hover:text-white font-bold"
+                href="#">3
+            </a>
+        </div>
+
+
+
+        <div>
+            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] px-4 text-black hover:text-white font-bold"
+                href="">Next<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="black " class="group-hover:stroke-white size-6 rotate-180">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg></a>
+
+
+            </a>
+
+        </div>
     </div>
 </div>
 
+</div>
 
-<!-- services section ends here -->
+<?php get_footer(); ?>

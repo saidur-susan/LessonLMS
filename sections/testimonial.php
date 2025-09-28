@@ -9,7 +9,7 @@
 
                             <div class="left-section w-[25%] flex flex-col mx-5 md:mx-auto justify-center ">
                                 <div class="w-[72px] h-[72px] rounded-full mb-5">
-                                    <img src="assets/img/Ellipse 2649.png" alt="">
+                                    <img src="assets/img/Ellipse 2649" alt="">
                                 </div>
                                 <h3 class="text-[16px] md:text-[24px] sen leading-[34px] text-[#F7F7F7]">Peter Moor</h3>
                                 <p class="poppins text-[14px] text-[#BFBCB2]">Student of Web Design</p>
