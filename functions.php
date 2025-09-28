@@ -532,8 +532,91 @@ function lessonlms_register_course()
     );
 }
 
-add_action('init', 'lessonlms_register_course')
+add_action('init', 'lessonlms_register_course');
 
+
+//register meta box
+
+function lesson_course_meta_box()
+{
+    add_meta_box(
+        'course_details',
+        'Course Details',
+        'lessonlms_course_meta_box_callback',
+        'course',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'lesson_course_meta_box');
+//callback no need hooks
+function lessonlms_course_meta_box_callback($post)
+{
+    $price = get_post_meta($post->ID, 'price', true);
+    $original_price = get_post_meta($post->ID, 'original_price', true);
+    $video_hours = get_post_meta($post->ID, 'video_hours', true);
+    $article_count = get_post_meta($post->ID, 'article_count', true);
+    $downloadable_resources = get_post_meta($post->ID, 'downloadable_resources', true);
+    $language = get_post_meta($post->ID, 'language', true);
+    $subtitle = get_post_meta($post->ID, 'subtitle', true);
+?>
+
+    <div>
+        <p>
+            <label for="price">Price:</label>
+            <input type="number" name="price" step="0.01" value="<?php echo esc_attr($price); ?>">
+        </p>
+
+        <p>
+            <label for="original_price">Original Price:</label>
+            <input type="number" name="original_price" step="0.01" value="<?php echo esc_attr($original_price); ?>">
+        </p>
+        <p>
+            <label for="video_hours">Video Hours:</label>
+            <input type="number" name="video_hours" step="0.1" value="<?php echo esc_attr($video_hours); ?>">
+        </p>
+        <p>
+            <label for="article_count">Article Count:</label>
+            <input type="number" name="article_count" value="<?php esc_attr($article_count); ?>">
+        </p>
+        <p>
+            <label for="downloadable_resources">Downloadable Resources:</label>
+            <input type="number" name="downloadable_resources" value="<?php esc_attr($downloadable_resources); ?>">
+        </p>
+        <p>
+            <label for="language">Language:</label>
+            <input type="text" name="language" value="<?php esc_attr($language); ?>">
+        </p>
+        <p>
+            <label for="subtitle">Subtitle:</label>
+            <input type="text" name="subtitle" value="<?php esc_attr($subtitle); ?>">
+        </p>
+    </div>
+
+<?php
+}
+
+//data save on backend fields
+function lessonlms_save_course_meta($post_id)
+{
+
+    $fields = array(
+        'price',
+        'original_price',
+        'video_hours',
+        'article_count',
+        'downloadable_resources',
+        'language',
+        'subtitle'
+
+    );
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post_course', 'lessonlms_save_course_meta');
 ?>
 
 
