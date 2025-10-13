@@ -18,7 +18,7 @@
             <?php
             $courses = new WP_Query(array(
                 'post_type' => 'course',
-                'posts_per_page' => 3,
+                'posts_per_page' => 4,
             ));
             if ($courses->have_posts()):
                 while ($courses->have_posts()): $courses->the_post();
@@ -30,7 +30,7 @@
                     $price = !empty($price) ? $price : '0.00';
             ?>
                     <!-- Course 1 -->
-                    <div class="course course-1 active-btn h-[466px] w-[370px] bg-white rounded-[12px] shadow-lg ">
+                    <div class="course course-1 active-btn min-h-[466px] w-[370px] bg-white rounded-[12px] shadow-lg ">
 
                         <?php if (has_post_thumbnail()) : ?>
                             <?php the_post_thumbnail('full', array(
@@ -40,7 +40,7 @@
                             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Image1.png" alt="">
                         <?php endif; ?>
 
-                        <div class="p-[16px]">
+                        <div class="p-[16px] relative">
                             <div class="flex justify-between items-center">
                                 <h3 class="poppins text-[18px] font-semibold leading-[30px] text-[#171100] "><?php the_title(); ?></h3>
                                 <p class="inline-flex justify-between items-center"> <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@
                             <p class="poppins text-[14px] leading-[26px] text-[#5F5B53] mb-[22px]"> <?php echo wp_trim_words(get_the_excerpt(), 15); ?></p>
 
 
-                            <div class="flex justify-between items-center ">
+                            <div class="flex justify-between items-center bottom-0">
                                 <h3 class="poppins text-[18px] font-semibold leading-[30px] text-[#171100] ">$<?php echo esc_html($price); ?></h3>
                                 <div class="">
                                     <a class="poppins bg-[#171100] hover:bg-[#FFB900] text-[18px] leading-[30px] px-4 h-[50px] rounded-full flex justify-center items-center text-white" href="<?php echo get_permalink(); ?>">Book Now</a>
