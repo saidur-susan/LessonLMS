@@ -15,7 +15,8 @@
                                     <span><?php echo get_the_date(); ?></span>
                                 </div>
                             </div>
-                            <h1 class="blog-title font-bold text-2xl my-2"><?php echo the_title(); ?></h1>
+                            <h1 class="blog-title f
+                            ont-bold text-2xl my-2"><?php echo the_title(); ?></h1>
                             <div class="author flex gap-x-2">
                                 <?php echo get_avatar(get_the_author_meta('ID'), 40); ?>
                                 <!-- <img class="author-avatar" src="" alt=""> -->

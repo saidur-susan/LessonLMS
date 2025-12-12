@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-
 <?php while (have_posts()) : the_post(); ?>
 
     <?php
@@ -28,33 +27,25 @@
             <div class="flex mb-[16px]">
 
                 <!-- star reviews -->
-                <p class="inline-flex justify-between items-center"> <svg width="18" height="17" viewBox="0 0 18 17"
-                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                            fill="#FEA31B" />
-                    </svg>
-                    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                            fill="#FEA31B" />
-                    </svg>
-                    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                            fill="#FEA31B" />
-                    </svg>
-                    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                            fill="#FEA31B" />
-                    </svg>
-                    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                            fill="#FEA31B" />
-                    </svg>
-                    <span class="text-[#FEA31B] text-[16px] poppins leading-[28px] ml-1 font-semibold">4.8 (1,245
+                <p class="inline-flex justify-between items-center">
+                    <?php
+                    $stats = lessonlms_get_review_stats(get_the_ID());
+                    $avg_rating = $stats['average_rating'];
+                    $total_reviews = $stats['total_reviews'];
+
+                    ?>
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <?php if ($i <= $avg_rating) : ?>
+                            <i class="fas fa-star"></i>
+                        <?php elseif ($i - 0.5 <= $avg_rating) : ?>
+                            <i class="fas fa-star-half-alt"></i>
+                        <?php else: ?>
+                            <i class="fa-regular fa-star"></i>
+                        <?php endif; ?>
+
+                    <?php endfor; ?>
+
+                    <span class="text-[#FEA31B] text-[16px] poppins leading-[28px] ml-1 font-semibold"><?php echo esc_html($avg_rating); ?> (<?php echo esc_html($total_reviews); ?>
                         reviews)</span>
                 </p>
 
@@ -102,10 +93,10 @@
                         <span class="orginal-price font-semibold  text-xl text-gray-500 line-through">$<?php echo esc_html($original_price); ?></span>
                         <!-- Small button -->
                         <div class="w-full flex ">
-                            <?php if (!empty($discout)) : ?>
+                            <?php if (!empty($discount)) : ?>
                                 <p
                                     class="font-bold bg-[#FFB900] text-gray-300 text-sm rounded-md h-[30px] max-w-[60px]  flex items-center px-3">
-                                    <?php echo esc_html($discout); ?>% OFF
+                                    <?php echo esc_html($discount); ?>% OFF
                                 </p>
                             <?php endif; ?>
                         </div>
@@ -267,11 +258,14 @@
                         <p class="text-gray-600">✔ Web debelopers wanting design skills</p>
                         <p class="text-gray-600">✔ Graphic designers transitionng to degital</p>
                         <p class="text-gray-600">✔ Product managers</p>
+
                     </div>
                 </div>
             </div>
             <!-- Right Sidebar End Here -->
         </div>
+
+
 
         <!-- tab section start here -->
         <div class="tab-section mt-8 max-w-[950px]">
@@ -295,10 +289,8 @@
             <div class="tab-contents mt-4">
                 <div id="tab-1" class="tab-content p-4 rounded-lg ">
                     <h1 class="text-xl font-bold mb-2">Course Description</h1>
-                    <p>This comprehensive course is designed to give you a strong foundation in [Course Topic]. You will
-                        gain practical skills, hands-on experience, and the knowledge to apply what you learn in
-                        real-world scenarios. By the end of this course, you will be confident in your abilities and
-                        ready to take your skills to the next level.</p>
+                    <p> <?php the_content(); ?></p>
+
                     <h1 class="text-xl font-bold mb-2 mt-4">What Will You Learn?</h1>
                     <ul class="list-disc ml-8">
                         <li>Master the fundamentals of [Course Topic]</li>
@@ -407,109 +399,196 @@
                         });
                     });
                 </script>
-            </div>
-            <div id="tab-3" class="tab-content hidden p-4 rounded-lg ">
-                <div class="flex flex-col md:flex-row gap-8">
+                <div id="tab-3" class="tab-content hidden p-4 rounded-lg ">
+                    <div class="flex flex-col md:flex-row gap-8">
 
-                    <!-- Left Side: Instructor Text -->
-                    <div class=" flex flex-col justify-start text-gray-700">
-                        <h2 class="text-xl font-semibold mb-2">Instructor</h2>
+                        <!-- Left Side: Instructor Text -->
+                        <div class=" flex flex-col justify-start text-gray-700">
+                            <h2 class="text-xl font-semibold mb-2">Instructor</h2>
 
+                        </div>
+
+                        <!-- Right Side: Instructor Details -->
+                        <div class="flex flex-col gap-4">
+                            <!-- Name and Post -->
+                            <div>
+                                <h3 class="text-2xl font-bold ">Sarah Johnson</h3>
+                                <p class="text-gray-500">Senior UI/UX Designer at Techcorp</p>
+                            </div>
+
+                            <!-- Ratings -->
+                            <div class="flex items-center gap-2">
+                                <div class="flex gap-1 text-yellow-400">
+                                    <!-- 5 stars example -->
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
+                                    </svg>
+                                </div>
+                                <span class="text-yellow-400 font-semibold">(4.9 Instructor ratings)</span>
+                            </div>
+
+                            <!-- Students & Courses -->
+                            <div class="count flex gap-6">
+                                <div class="w-fit text-center">
+                                    <h2 class="font-extrabold text-3xl mb-2">12,540</h2>
+                                    <span class="text-gray-600"> Students</span>
+                                </div>
+                                <div class="w-fit text-center">
+                                    <h2 class="font-extrabold text-3xl mb-2">8</h2>
+                                    <span class="text-gray-600"> Courses</span>
+                                </div>
+                            </div>
+
+                            <!-- About Instructor -->
+                            <div>
+                                <p class="">Sarah Johnson is a Senior UI/UX Designer at Techcorp with over
+                                    10 years of experience in designing intuitive and engaging user interfaces. She has
+                                    trained hundreds of students globally and brings real-world experience into every
+                                    lesson.</p>
+                            </div>
+
+                        </div>
                     </div>
+                </div>
+                <div id="tab-4" class="tab-content hidden p-4 rounded-lg ">
+                    <h1 class="text-xl font-bold mb-2">Students Review</h1>
 
-                    <!-- Right Side: Instructor Details -->
-                    <div class="flex flex-col gap-4">
-                        <!-- Name and Post -->
-                        <div>
-                            <h3 class="text-2xl font-bold ">Sarah Johnson</h3>
-                            <p class="text-gray-500">Senior UI/UX Designer at Techcorp</p>
-                        </div>
+                    <form class="review-form" method="post" style="margin:auto;padding:20px;border:1px solid #ddd;border-radius:8px;">
 
-                        <!-- Ratings -->
-                        <div class="flex items-center gap-2">
-                            <div class="flex gap-1 text-yellow-400">
-                                <!-- 5 stars example -->
-                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
-                                </svg>
-                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
-                                </svg>
-                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
-                                </svg>
-                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
-                                </svg>
-                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z" />
-                                </svg>
-                            </div>
-                            <span class="text-yellow-400 font-semibold">(4.9 Instructor ratings)</span>
-                        </div>
+                        <input type="hidden" name="course_id" value="<?php echo get_the_ID(); ?>">
 
-                        <!-- Students & Courses -->
-                        <div class="count flex gap-6">
-                            <div class="w-fit text-center">
-                                <h2 class="font-extrabold text-3xl mb-2">12,540</h2>
-                                <span class="text-gray-600"> Students</span>
-                            </div>
-                            <div class="w-fit text-center">
-                                <h2 class="font-extrabold text-3xl mb-2">8</h2>
-                                <span class="text-gray-600"> Courses</span>
+
+                        <div class="form-group">
+                            <label>Your Rating</label>
+
+                            <!-- Rating -->
+                            <div class="flex mb-4 star-rating flex-row-reverse">
+
+                                <input class="hidden peer" type="radio" id="star1" name="rating" value="1">
+                                <label for="star1" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+                                <input class="hidden peer" type="radio" id="star2" name="rating" value="2">
+                                <label for="star2" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+                                <input class="hidden peer" type="radio" id="star3" name="rating" value="3">
+                                <label for="star3" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+                                <input class="hidden peer" type="radio" id="star4" name="rating" value="4">
+                                <label for="star4" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+                                <input class="hidden peer" type="radio" id="star5" name="rating" value="5" required>
+                                <label for="star5" class=" cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+
+
                             </div>
                         </div>
 
-                        <!-- About Instructor -->
-                        <div>
-                            <p class="">Sarah Johnson is a Senior UI/UX Designer at Techcorp with over
-                                10 years of experience in designing intuitive and engaging user interfaces. She has
-                                trained hundreds of students globally and brings real-world experience into every
-                                lesson.</p>
+                        <div class="form-group">
+                            <!-- Reviewer Name -->
+                            <label for="reviewer_name"><strong>Reviewer Name:</strong></label><br>
+                            <input type="text" id="reviewer_name" name="reviewer_name" placeholder="Enter your name" required
+                                style="width:100%;padding:8px;margin:5px 0;">
                         </div>
 
+                        <div class="form-group">
+                            <!-- Review Text -->
+                            <label for="review_text"><strong>Review:</strong></label><br>
+                            <textarea id="review_text" name="review_text" rows="5" placeholder="Write your review here..." required
+                                style="width:100%;padding:8px;margin:5px 0;"></textarea>
+                        </div>
+                        <!-- Submit Button -->
+                        <button type="submit" name="submit_review"
+                            style="width:100%;padding:10px;background:#0073aa;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+                            Submit Review
+                        </button>
+                    </form>
+                    <div class="reviews list">
+
+                        <?php
+                        $reviews = lessonlms_get_course_reviews(get_the_ID());
+                        if ($reviews) : ?>
+                            <?php foreach (array_reverse($reviews) as $review) : ?>
+                                <div class="review_item flex justify-between gap-4 my-6 pt-4">
+                                    <div class="reviewer_name">
+                                        <h3 class="font-bold"><?php echo esc_html($review['name']); ?></h3>
+
+                                        <p class="my-2"><?php echo esc_html($review['review']); ?></p>
+                                        <h4 class="text-sm"><?php echo date('F j, Y', strtotime($review['date'])); ?></h4>
+                                    </div>
+
+                                    <div class="reviewer_rating">
+                                        <div class="flex mb-4" id="stars">
+                                            <?php for ($i = 1; $i <= 5; $i++) : ?>
+
+                                                <?php if ($i <= $review['rating']): //full star add korte hobe 
+                                                ?>
+                                                    <i class="fa-solid fa-star"></i>
+                                                <?php else: //half or black star add korte hobe 
+                                                ?>
+
+                                                    <i class="fa-regular fa-star"></i>
+                                                <?php endif; ?>
+
+                                            <?php endfor; ?>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            <?php endforeach; ?>
+
+                        <?php else : ?>
+                            <p>No review yet.</p>
+                        <?php endif;
+                        ?>
                     </div>
                 </div>
             </div>
-            <div id="tab-4" class="tab-content hidden p-4 rounded-lg ">
-                <h1 class="text-xl font-bold mb-2">Tab 4 Heading</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-            </div>
         </div>
-    </div>
 
+        <!-- jQuery Script -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.tab-links').click(function() {
+                    var tab_id = $(this).data('tab');
 
-    <!-- jQuery Script -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.tab-links').click(function() {
-                var tab_id = $(this).data('tab');
+                    // remove active classes
+                    $('.tab-links').removeClass('text-[#604B33] border-b-2 border-[#604B33]').addClass('font-bold border-transparent');
+                    $('.tab-content').addClass('hidden');
 
-                // remove active classes
-                $('.tab-links').removeClass('text-[#604B33] border-b-2 border-[#604B33]').addClass('font-bold border-transparent');
-                $('.tab-content').addClass('hidden');
-
-                // add active classes
-                $(this).addClass('border-b-4 border-[#604B33] font-bold').removeClass('font-bold border-transparent');
-                $('#' + tab_id).removeClass('hidden');
+                    // add active classes
+                    $(this).addClass('border-b-4 border-[#604B33] font-bold').removeClass('font-bold border-transparent');
+                    $('#' + tab_id).removeClass('hidden');
+                });
             });
-        });
-    </script>
-    <div class="also-like">
-
-    </div>
-    <h2 class="sen text-[38px] my-8 tracking-[0.76px] text-center font-bold mb-[16px]">You May Also Like
-    </h2>
-    </div>
+        </script>
 
 
-<?php endwhile; ?>
 
 
-<?php get_footer(); ?>
+        <div class="also-like">
+            <h2 class="sen text-[38px] my-8 tracking-[0.76px] text-center font-bold mb-[16px]">You May Also Like</h2>
+        </div>
+
+
+    <?php endwhile; ?>
+
+
+
+
+    <?php get_footer(); ?>

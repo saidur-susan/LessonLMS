@@ -617,6 +617,189 @@ function lessonlms_save_course_meta($post_id)
     }
 }
 add_action('save_post_course', 'lessonlms_save_course_meta');
+
+
+//ইউজার রিভিউ সাবমিট করলে তা প্রসেস হবে এবং সেভ হবে।
+function lessonlms_handle_review_submission()
+{
+    if (isset($_POST['submit_review']) && isset($_POST['course_id'])) {
+        $course_id = intval($_POST['course_id']);
+        $rating = intval($_POST['rating']);
+        $review_text = sanitize_text_field($_POST['review_text']);
+        $reviewer_name = sanitize_text_field($_POST['reviewer_name']);
+
+        if ($rating >= 1 && $rating <= 5 && !empty($review_text) && !empty($reviewer_name)) {
+            $reviews = get_post_meta($course_id, '_course_reviews', true);
+
+            if (!is_array($reviews)) {
+                $reviews = array();
+            }
+            $new_review = array(
+                'rating' => $rating,
+                'review' => $review_text,
+                'name' => $reviewer_name,
+                'date' => current_time('mysql')
+            );
+
+            $reviews[] = $new_review;
+
+            update_post_meta($course_id, '_course_reviews', $reviews);
+
+            lessonlms_update_review_stats($course_id);
+            //Redirect to prevent resubmission
+            wp_redirect(add_query_arg('review_submitted', 'true', get_permalink($course_id)));
+            exit;
+        }
+    }
+}
+add_action('init', 'lessonlms_handle_review_submission');
+
+
+//কোর্সের রিভিউ থেকে মোট রিভিউ সংখ্যা ও গড় রেটিং আপডেট করবে।
+function lessonlms_update_review_stats($course_id)
+{
+    $reviews = get_post_meta($course_id, '_course_reviews', true);
+
+    if (is_array($reviews) && !empty($reviews)) {
+        $total_rating = 0;
+        $review_count = count($reviews);
+
+        foreach ($reviews as $review) {
+            $total_rating = $total_rating + $review['rating'];
+        }
+
+        $average_rating = round($total_rating / $review_count, 1);
+
+        update_post_meta($course_id, '_total_reviews', $review_count);
+        update_post_meta($course_id, '_avarage_rating', $average_rating);
+    }
+}
+
+
+//কোর্সের মোট রিভিউ ও গড় রেটিং রিটার্ণ করবে
+function lessonlms_get_review_stats($course_id)
+{
+    $total_reviews = get_post_meta($course_id, '_total_reviews', true) ?: 0;
+    $average_rating = get_post_meta($course_id, '_avarage_rating', true) ?: 0;
+
+    return array(
+        'total_reviews' => $total_reviews,
+        'average_rating' => $average_rating,
+    );
+}
+//কোর্সের সকল রিভিউ অ্যারে রিটার্ণ করবে
+function lessonlms_get_course_reviews($course_id)
+{
+    return get_post_meta($course_id, '_course_reviews', true) ?: array();
+}
+
+function lessonlms_handle_enrollment()
+{
+    $course_id = isset($_POST['course_id']) ? intval($_POST['course_id']) : 0;
+
+    if ($course_id <= 0) {
+        wp_send_json_error('Invalid Course ID');
+    }
+
+    $user_id = get_current_user_id();
+
+    if ($user_id === 0) {
+        wp_send_json_error('Please Login to Enroll');
+    }
+
+    $current_enrolled = get_post_meta($course_id, '_enroll_students', true ?: 0);
+    $new_count = intval($current_enrolled) + 1;
+    update_post_meta($course_id, '_enrolled_students', $new_count);
+
+    $user_enrollments = get_user_meta($user_id, '_user_enrollments', true);
+
+    if (!is_array($user_enrollments)) {
+        $user_enrollments = array();
+    }
+
+    $user_enrollments[] = array(
+        'course_id' => $course_id,
+        'date' => current_time('mysql'),
+    );
+
+    update_user_meta($user_id, '_user_enrollments', $user_enrollments);
+
+    $formated_count = number_format($new_count);
+    wp_send_json_success($formated_count);
+}
+add_action('wp_ajax_lessonlms_enroll_course', 'lessonlms_handle_enrollment');
+add_action('wp_ajax_nopriv_lessonlms_enroll_course', 'lessonlms_handle_enrollment');
+
+function lessonlms_ajax_scripts()
+{
+?>
+    <script type="text/javascript">
+        var ajax_object = {
+            ajaxurl: '<?php echo admin_url('admin-ajax.php'); ?>'
+        }
+    </script>
+<?php
+}
+add_action('wp_head', 'lessonlms_ajax_scripts');
+
+function lessonlms_dashboard_enrollment_widget()
+{
+    global $wpdb;
+
+    $total_enrollment = $wpdb->get_var(
+        "SELECT SUM(meta_value) FROM $wpdb->postmeta WHERE meta_key = '_enrollment_students' "
+    );
+
+    $recent_enrollments = $wpdb->get_results(
+        "SELECT u.user_login, p.post_title, um.meta_value
+        FROM $wpdb->user_meta  um
+        JOIN $wpdb->users u ON u.ID = um.user_id
+        JOIN $wpdb->posts p ON p.ID = um.meta_value
+        WHERE um.meta_key = '_user_enrollments'
+        ORDER BY um.umeta_id DESC
+        LIMIT 5"
+
+    );
+
+?>
+    <div class="enrollment-dashboard-widget">
+        <h3>Enrollment Status</h3>
+
+        <div class="enrollment-stats">
+            <div class="stat-item">
+                <span class="stat-number"><?php echo number_format($total_enrollment ?: 0); ?></span>
+                <span class="stat-label">Total Enrollment</span>
+            </div>
+        </div>
+
+        <?php if ($recent_enrollments) : ?>
+            <div class="recent-enrollments">
+                <h4>Last Enrollment</h4>
+                <ul>
+                    <?php foreach ($recent_enrollments as $enrollment) : ?>
+                        <li>
+                            <strong><?php echo esc_html($enrollment->user_login); ?></strong>
+                            - <?php esc_html($enrollment->post_title); ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </div>
+
+<?php
+}
+
+
+function lessonlms_add_enrollment_dashboard_widget()
+{
+    wp_add_dashboard_widget(
+        'enrollment_dashboard_widget',
+        'Course Enrollment Status',
+        'lessonlms_dashboard_enrollment_widget',
+    );
+}
+add_action('wp_dashboard_setup', 'lessonlms_add_enrollment_dashboard_widget')
 ?>
 
 
