@@ -5,15 +5,20 @@
     $price = get_post_meta(get_the_ID(), 'price', true) ?: '0.00';
     $original_price = get_post_meta(get_the_ID(), 'original_price', true) ?: ' ';
 
-    $discout = '';
-    if (!empty($original_price) && $original_price > $price) {
-        $discout = round((($original_price - $price) / $original_price) * 100);
-    }
+
     $video_hours = get_post_meta(get_the_ID(), 'video_hours', true) ?: '0';
     $article_count = get_post_meta(get_the_ID(), 'article_count', true) ?: '0';
     $downloadable_resources = get_post_meta(get_the_ID(), 'downloadable_resources', true) ?: '0';
     $language = get_post_meta(get_the_ID(), 'language', true) ?: 'English';
     $subtitle = get_post_meta(get_the_ID(), 'subtitle', true) ?: 'English';
+
+    $discout = '';
+    if (!empty($original_price) && $original_price > $price) {
+        $discout = round((($original_price - $price) / $original_price) * 100);
+    }
+
+    $enrolled_students = get_post_meta(get_the_ID(), '_enrolled_students', true) ?: 0;
+    $current_user_id = get_current_user_id();
     ?>
     <div class="container mx-auto py-[40px] md:py-[50px] px-4">
 
@@ -27,7 +32,7 @@
             <div class="flex mb-[16px]">
 
                 <!-- star reviews -->
-                <p class="inline-flex justify-between items-center">
+                <div class="inline-flex justify-between items-center">
                     <?php
                     $stats = lessonlms_get_review_stats(get_the_ID());
                     $avg_rating = $stats['average_rating'];
@@ -47,19 +52,19 @@
 
                     <span class="text-[#FEA31B] text-[16px] poppins leading-[28px] ml-1 font-semibold"><?php echo esc_html($avg_rating); ?> (<?php echo esc_html($total_reviews); ?>
                         reviews)</span>
-                </p>
+                </div>
 
                 <!-- students enrolled -->
-                <p class="inline-flex justify-between items-center ml-8"> <svg xmlns="http://www.w3.org/2000/svg"
+                <div class="enrolled inline-flex justify-between items-center ml-8"> <svg xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                     </svg>
 
 
-                    <span class=" text-[16px] poppins leading-[28px] ml-1 font-semibold">3,450 students
+                    <span class=" text-[16px] poppins leading-[28px] ml-1 font-semibold"><?php echo number_format($enrolled_students) ?> students
                         enrolled</span>
-                </p>
+                </div>
             </div>
         </div>
         <!-- title section end here -->
@@ -101,12 +106,18 @@
                             <?php endif; ?>
                         </div>
 
-                        <!-- Full width button -->
-                        <a class="poppins bg-[#FFB900] hover:bg-[#000000] text-[18px] font-bold rounded-lg h-[40px] w-full flex justify-center items-center text-white mt-3"
-                            href="">
-                            Enroll Now
-                        </a>
-
+                        <?php if ($current_user_id > 0) : ?>
+                            <!-- Full width button -->
+                            <a data-course-id="<?php echo get_the_ID(); ?>" class="poppins enroll-btn cursor-pointer bg-[#FFB900] hover:bg-[#000000] text-[18px] font-bold rounded-lg h-[40px] w-full flex justify-center items-center text-white mt-3">
+                                Enroll Now
+                            </a>
+                        <?php else:  ?>
+                            <div class="login-required">
+                                <p>Please Register</p>
+                                <a href="<?php echo wp_login_url(get_permalink()); ?>" class="login-btn">Login</a>
+                                <a href="<?php echo wp_registration_url() ?>" class="register-btn">Registration</a>
+                            </div>
+                        <?php endif; ?>
                         <div class="flex flex-col gap-4 font-semibold">
                             <h2 class="text-xl  text-[#604B33]">The course includes:</h2>
 
@@ -479,20 +490,22 @@
                             <label>Your Rating</label>
 
                             <!-- Rating -->
-                            <div class="flex mb-4 star-rating flex-row-reverse">
+                            <div class="student-rating">
+                                <div class="flex mb-4 star-rating flex-row-reverse">
 
-                                <input class="hidden peer" type="radio" id="star1" name="rating" value="1">
-                                <label for="star1" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-                                <input class="hidden peer" type="radio" id="star2" name="rating" value="2">
-                                <label for="star2" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-                                <input class="hidden peer" type="radio" id="star3" name="rating" value="3">
-                                <label for="star3" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-                                <input class="hidden peer" type="radio" id="star4" name="rating" value="4">
-                                <label for="star4" class="cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-                                <input class="hidden peer" type="radio" id="star5" name="rating" value="5" required>
-                                <label for="star5" class=" cursor-pointer hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+                                    <input class="hidden peer" type="radio" id="star1" name="rating" value="1">
+                                    <label for="star1" class="cursor-pointer star peer-checked:text-yellow-400">&#9734</label>
+                                    <input class="hidden peer" type="radio" id="star2" name="rating" value="2">
+                                    <label for="star2" class="cursor-pointer star peer-checked:text-yellow-400">&#9734</label>
+                                    <input class="hidden peer" type="radio" id="star3" name="rating" value="3">
+                                    <label for="star3" class="cursor-pointer star peer-checked:text-yellow-400">&#9734</label>
+                                    <input class="hidden peer" type="radio" id="star4" name="rating" value="4">
+                                    <label for="star4" class="cursor-pointer star peer-checked:text-yellow-400">&#9734</label>
+                                    <input class="hidden peer" type="radio" id="star5" name="rating" value="5" required>
+                                    <label for="star5" class=" cursor-pointer star peer-checked:text-yellow-400">&#9734</label>
 
 
+                                </div>
                             </div>
                         </div>
 
@@ -560,8 +573,7 @@
             </div>
         </div>
 
-        <!-- jQuery Script -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script>
             $(document).ready(function() {
                 $('.tab-links').click(function() {
@@ -574,6 +586,43 @@
                     // add active classes
                     $(this).addClass('border-b-4 border-[#604B33] font-bold').removeClass('font-bold border-transparent');
                     $('#' + tab_id).removeClass('hidden');
+                });
+            });
+
+            //Enroll Button Click Handler
+            document.querySelectorAll('.enroll-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const courseId = this.getAttribute('data-course-id');
+                    const enrolledElement = document.querySelector('.enrolled span');
+
+                    fetch(ajax_object.ajaxurl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'action=lessonlms_enroll_course&course_id=' + courseId
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                enrolledElement.textContent = data.data + 'student enrolled';
+
+                                this.textContent = 'Enrolled';
+                                data.disabled = true;
+                                alert('Enrolled Successfully');
+                            } else {
+                                if (data.data == 'Please Login to Enroll') {
+                                    alert('Please Login First');
+                                    window.location.href = '<?php echo wp_login_url(get_permalink()); ?>'
+                                } else {
+                                    alert('opps! Enrollment Unsuccessfull. ' + data.data);
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Please try again')
+                        });
                 });
             });
         </script>

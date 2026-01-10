@@ -22,3 +22,11 @@ body {
     font-family: "Poppins", sans-serif;
 
 }
+
+.star-rating .star:hover~.star {
+    color: #555;
+}
+
+.star-rating:hover .star {
+    color: #ffc107;
+}

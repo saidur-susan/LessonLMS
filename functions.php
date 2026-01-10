@@ -703,11 +703,11 @@ function lessonlms_handle_enrollment()
 
     $user_id = get_current_user_id();
 
-    if ($user_id === 0) {
+    if ($user_id == 0) {
         wp_send_json_error('Please Login to Enroll');
     }
 
-    $current_enrolled = get_post_meta($course_id, '_enroll_students', true ?: 0);
+    $current_enrolled = get_post_meta($course_id, '_enrolled_students', true ?: 0);
     $new_count = intval($current_enrolled) + 1;
     update_post_meta($course_id, '_enrolled_students', $new_count);
 
@@ -747,7 +747,7 @@ function lessonlms_dashboard_enrollment_widget()
     global $wpdb;
 
     $total_enrollment = $wpdb->get_var(
-        "SELECT SUM(meta_value) FROM $wpdb->postmeta WHERE meta_key = '_enrollment_students' "
+        "SELECT SUM(meta_value) FROM $wpdb->postmeta WHERE meta_key = '_enrolled_students' "
     );
 
     $recent_enrollments = $wpdb->get_results(
