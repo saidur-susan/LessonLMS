@@ -12,6 +12,9 @@
     $language = get_post_meta(get_the_ID(), 'language', true) ?: 'English';
     $subtitle = get_post_meta(get_the_ID(), 'subtitle', true) ?: 'English';
 
+    $learn_points_raw = get_post_meta(get_the_ID(), 'learn_points', true);
+    $learn_points = $learn_points_raw ? array_filter(array_map('trim', explode("\n", $learn_points_raw))) : [];
+
     $discout = '';
     if (!empty($original_price) && $original_price > $price) {
         $discout = round((($original_price - $price) / $original_price) * 100);
@@ -302,16 +305,16 @@
                     <h1 class="text-xl font-bold mb-2">Course Description</h1>
                     <p> <?php the_content(); ?></p>
 
-                    <h1 class="text-xl font-bold mb-2 mt-4">What Will You Learn?</h1>
-                    <ul class="list-disc ml-8">
-                        <li>Master the fundamentals of [Course Topic]</li>
-                        <li>Build practical projects from scratch</li>
-                        <li>Understand advanced techniques and best practices</li>
-                        <li>Gain problem-solving skills applicable to real-world tasks</li>
-                        <li>Learn to use essential tools and software efficiently</li>
-                        <li>Develop strategies for optimizing performance and results</li>
-                        <li>Prepare for certifications and career opportunities in the field</li>
-                    </ul>
+                    <?php if (!empty($learn_points)) : ?>
+                        <h1 class="text-xl font-bold mb-2 mt-4">What Will You Learn?</h1>
+
+                        <ul class="ml-2">
+                            <?php foreach ($learn_points as $point) :  ?>
+                                <li><i class="fas fa-check"></i><?php echo esc_html($point) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif;  ?>
+
 
                     <h1 class="text-xl font-bold mb-2 mt-4">Requirements</h1>
                     <ul class="list-disc ml-8">
@@ -608,7 +611,7 @@
                                 enrolledElement.textContent = data.data + 'student enrolled';
 
                                 this.textContent = 'Enrolled';
-                                data.disabled = true;
+                                this.disabled = true;
                                 alert('Enrolled Successfully');
                             } else {
                                 if (data.data == 'Please Login to Enroll') {

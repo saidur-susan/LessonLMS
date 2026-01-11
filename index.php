@@ -1,3 +1,39 @@
+<?php
+/*
+lessonLMS/
+    style.css
+    index.php(for Blog Page)
+    screenshot.png
+    function.php
+    assets/
+        css/
+        js/
+        images/
+    inc/
+        setup.php
+        enqueue.php
+        customizer.php
+        custom-post-type.php
+        metabox.php
+        ajax-functions.php
+        review-functions.php
+        dashboard-widgets.php
+    template-parts/
+       sections/
+            hero
+            courses
+            testimonials
+            ...
+        content/
+            content-{}.php
+    languages/
+        lessonlms.pot
+    header.php
+    footer.php
+    front-page.php(for Home Page)
+    */
+?>
+
 <?php get_header(); ?>
 
 
