@@ -559,7 +559,15 @@
             $downloadable_resources = get_post_meta($post->ID, 'downloadable_resources', true);
             $language = get_post_meta($post->ID, 'language', true);
             $subtitle = get_post_meta($post->ID, 'subtitle', true);
-            $learn_points = get_post_meta($post->ID, 'learn_points', true);
+
+            $learn_points_data = get_post_meta($post->ID, 'learn_points', true);
+            $learn_points = is_array($learn_points_data) ? implode("\n", $learn_points_data) : $learn_points_data;
+
+            $requirements_data = get_post_meta($post->ID, 'requirements', true);
+            $requirements = is_array($requirements_data) ? implode("\n", $requirements_data) : $requirements_data;
+
+            $target_audience_data = get_post_meta($post->ID, 'target_audience', true);
+            $target_audience = is_array($target_audience_data) ? implode("\n", $target_audience_data) : $target_audience_data;
         ?>
 
             <div>
@@ -597,6 +605,16 @@
                     <small>Input your list items</small>
                     <textarea name="learn_points" id="learn_points" style="width:100%;" rows="5"><?php echo esc_textarea($learn_points) ?></textarea>
                 </p>
+                <p>
+                    <label for="target_audience"><strong>Who this course is for:</strong></label><br>
+                    <small>Input your list items</small>
+                    <textarea name="target_audience" id="target_audience" style="width:100%;" rows="5"><?php echo esc_textarea($target_audience) ?></textarea>
+                </p>
+                <p>
+                    <label for="requirements"><strong>Requirements</strong></label><br>
+                    <small>Input your list items</small>
+                    <textarea name="requirements" id="requirements" style="width:100%;" rows="5"><?php echo esc_textarea($requirements) ?></textarea>
+                </p>
             </div>
 
         <?php
@@ -621,8 +639,16 @@
                     update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
                 }
             }
-            if (isset($_POST['learn_points'])) {
-                update_post_meta($post_id, 'learn_points', sanitize_textarea_field($_POST['learn_points']));
+
+            $textarea_fields = array(
+                'learn_points',
+                'requirements',
+                'target_audience',
+            );
+            foreach ($textarea_fields as $field) {
+                if (isset($_POST[$field])) {
+                    update_post_meta($post_id, $field, sanitize_textarea_field($_POST[$field]));
+                }
             }
         }
         add_action('save_post_course', 'lessonlms_save_course_meta');

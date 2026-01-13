@@ -15,6 +15,12 @@
     $learn_points_raw = get_post_meta(get_the_ID(), 'learn_points', true);
     $learn_points = $learn_points_raw ? array_filter(array_map('trim', explode("\n", $learn_points_raw))) : [];
 
+    $requirments_raw = get_post_meta(get_the_ID(), 'requirements', true);
+    $requirments = $requirments_raw ? array_filter(array_map('trim', explode("\n", $requirments_raw))) : [];
+
+    $target_audience_raw = get_post_meta(get_the_ID(), 'target_audience', true);
+    $target_audience  = $target_audience_raw ? array_filter(array_map('trim', explode("\n", $target_audience_raw))) : [];
+
     $discout = '';
     if (!empty($original_price) && $original_price > $price) {
         $discout = round((($original_price - $price) / $original_price) * 100);
@@ -267,11 +273,20 @@
 
 
                     <div class=" border shadow-xl border-gray-300 rounded-2xl p-6 flex flex-col gap-4">
-                        <h2 class="text-xl font-semibold text-[#604B33]">Who this course is for:</h2>
-                        <p class="text-gray-600">✔ Aspiring UI/UX designers</p>
-                        <p class="text-gray-600">✔ Web debelopers wanting design skills</p>
-                        <p class="text-gray-600">✔ Graphic designers transitionng to degital</p>
-                        <p class="text-gray-600">✔ Product managers</p>
+
+                        <?php if (!empty($target_audience)): ?>
+                            <h2 class="text-xl font-semibold text-[#604B33]">Who this course is for:</h2>
+                            <ul class=" ml-2">
+                                <?php foreach ($target_audience as $audience) : ?>
+                                    <p><i class="fas fa-check"></i><?php echo esc_html($audience) ?></p>
+                                <?php endforeach; ?>
+                            </ul>
+
+                        <?php endif; ?>
+
+
+
+
 
                     </div>
                 </div>
@@ -315,18 +330,15 @@
                         </ul>
                     <?php endif;  ?>
 
+                    <?php if (!empty($requirments)) : ?>
+                        <h1 class="text-xl font-bold mb-2 mt-4">Requirements:</h1>
 
-                    <h1 class="text-xl font-bold mb-2 mt-4">Requirements</h1>
-                    <ul class="list-disc ml-8">
-                        <li>Master the fundamentals of [Course Topic]</li>
-                        <li>Basic knowledge of [related topic, e.g., programming, design, or math]</li>
-                        <li>A computer or laptop with internet access</li>
-                        <li>Willingness to practice and complete assignments</li>
-                        <li>No prior professional experience required</li>
-                        <li>[Optional: Specific software/tools if needed]</li>
-                        <li>Motivation to learn and grow</li>
-                        <li>A curiosity to explore and experiment with new concepts</li>
-                    </ul>
+                        <ul class="ml-2">
+                            <?php foreach ($requirments as $requirment) :  ?>
+                                <li><i class="fas fa-check"></i><?php echo esc_html($requirment) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif;  ?>
 
                 </div>
                 <div id="tab-2" class="tab-content hidden p-4 rounded-lg ">
