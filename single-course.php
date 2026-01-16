@@ -427,10 +427,19 @@
                 </script>
                 <div id="tab-3" class="tab-content hidden p-4 rounded-lg ">
                     <div class="flex flex-col md:flex-row gap-8">
+                        <?php
+                        $instructor_id = get_the_author_meta('ID');
+                        $instructor_name = get_the_author_meta('display_name');
+                        $instructor_bio = get_the_author_meta('description');
 
+                        ?>
                         <!-- Left Side: Instructor Text -->
                         <div class=" flex flex-col justify-start text-gray-700">
                             <h2 class="text-xl font-semibold mb-2">Instructor</h2>
+                            <div class="instructor-image">
+                                <?php echo get_avatar($instructor_id, 86, '', $instructor_name, array('alt' => $instructor_name)); ?>
+
+                            </div>
 
                         </div>
 
@@ -438,8 +447,11 @@
                         <div class="flex flex-col gap-4">
                             <!-- Name and Post -->
                             <div>
-                                <h3 class="text-2xl font-bold ">Sarah Johnson</h3>
-                                <p class="text-gray-500">Senior UI/UX Designer at Techcorp</p>
+                                <h3 class="text-2xl font-bold "><?php echo esc_html($instructor_name); ?></h3>
+                                <?php if (!empty($instructor_bio)) : ?>
+                                    <p class="text-gray-500"> <?php echo wp_kses_post($instructor_bio); ?></p>
+
+                                <?php endif; ?>
                             </div>
 
                             <!-- Ratings -->
@@ -473,21 +485,18 @@
                             <!-- Students & Courses -->
                             <div class="count flex gap-6">
                                 <div class="w-fit text-center">
-                                    <h2 class="font-extrabold text-3xl mb-2">12,540</h2>
+                                    <h2 class="font-extrabold text-3xl mb-2"><?php echo number_format($enrolled_students) ?></h2>
                                     <span class="text-gray-600"> Students</span>
                                 </div>
                                 <div class="w-fit text-center">
-                                    <h2 class="font-extrabold text-3xl mb-2">8</h2>
+                                    <h2 class="font-extrabold text-3xl mb-2"><?php echo count_user_posts($instructor_id, 'course',) ?></h2>
                                     <span class="text-gray-600"> Courses</span>
                                 </div>
                             </div>
 
-                            <!-- About Instructor -->
+
                             <div>
-                                <p class="">Sarah Johnson is a Senior UI/UX Designer at Techcorp with over
-                                    10 years of experience in designing intuitive and engaging user interfaces. She has
-                                    trained hundreds of students globally and brings real-world experience into every
-                                    lesson.</p>
+
                             </div>
 
                         </div>

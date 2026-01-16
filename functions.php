@@ -526,7 +526,7 @@
                     'public'      => true,
                     'has_archive' => true,
                     'rewrite'     => array('slug' => 'course'),
-                    'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+                    'supports' => array('title', 'editor', 'thumbnail', 'author'), //custom-fields for custom field options
                     'menu_icon' => 'dashicons-book',
                 )
             );
