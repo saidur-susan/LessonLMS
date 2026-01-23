@@ -46,13 +46,13 @@
                     <!-- Course 1 -->
                     <div class="course course-1 active-btn h-[466px] w-[370px] bg-white rounded-[12px] shadow-lg ">
 
-                        <?php if (has_post_thumbnail()) : ?>
-                            <?php the_post_thumbnail('full', array(
-                                'alt' => get_the_title()
-                            )); ?>
-                        <?php else : ?>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Image1.png" alt="">
-                        <?php endif; ?>
+                            <?php if (has_post_thumbnail()) : ?>
+                                <?php the_post_thumbnail('full', array(
+                                    'alt' => get_the_title()
+                                )); ?>
+                            <?php else : ?>
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Image1.png" alt="">
+                            <?php endif; ?>
 
                         <div class="p-[16px]">
                             <div class="flex justify-between items-center">
