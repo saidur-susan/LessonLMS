@@ -17,7 +17,7 @@
         <div class="container py-[36px]">
 
 
-            <div class="navbar  mx-5 z-100 flex justify-between items-center gap-x-[10px] md:gap-x-[70px]">
+            <div class="navbar  mx-5 z-100 flex justify-between items-center gap-x-[10px] md:gap-x-[70px] ">
 
                 <!-- wordpress logo -->
 
@@ -35,13 +35,23 @@
 
 
 
-                <nav class="rrf-menu hidden md:block ml-auto ">
+                <nav class="rrf-menu hidden md:block ml-auto">
+
                     <?php
                     wp_nav_menu(array(
                         'theme_location' => 'primary'
                     ));
                     ?>
+
                 </nav>
+                <div class="sign-up  ">
+                    <?php if (is_user_logged_in()): ?>
+                        <?php $dashboard_url = home_url('/dashboard'); ?>
+                        <a class="btn" href="<?php echo esc_url($dashboard_url); ?>">Dashboard</a>
+                    <?php else: ?>
+                        <a class="btn" href="<?php echo esc_url(wp_registration_url()); ?>">Sign Up</a>
+                    <?php endif; ?>
+                </div>
 
 
 
@@ -52,7 +62,7 @@
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/icon/menu.png" alt="menu-icon" class="w-[22px]">
                     </label>
 
-                    <ul class="translate-x-full peer-checked:translate-0 duration-300 ease-in-out fixed top-[90px] bg-[#FFFCF4]/80  right-0 w-[100%] h-screen z-100 pl-4">
+                    <ul class="translate-x-full peer-checked:translate-0 duration-300 ease-in-out fixed top-[160px] bg-[#FFFCF4]/80   right-0 w-[100%] h-screen z-100 pl-4">
                         <li class=" py-2 my-4">menu 1</li>
                         <li class="py-2 my-4">menu 2</li>
                         <li class="py-2 my-4">menu 3</li>

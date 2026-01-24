@@ -9,12 +9,12 @@
         <div class="slide-blog">
             <div class="">
                 <div class="">
-                    <div class="flex flex-col md:flex-row gap-y-[20px] md:gap-x-[30px] text-black">
+                    <div class="blog-wrapper flex flex-col md:flex-row gap-y-[20px] md:gap-x-[30px] text-black">
 
                         <?php
                         $posts = new WP_Query(array(
                             'post_type' => 'post',
-                            'posts_per_page' => 4,
+                            'posts_per_page' => 3,
                             'order' => 'DESC'
                         ));
                         if ($posts->have_posts()) :

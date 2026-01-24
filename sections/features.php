@@ -6,7 +6,7 @@
     $feature_description = get_theme_mod('feature_description', '87% of people learning for professional development report career benefits like getting a promotion, a raise, or starting a new career.
 
 Lesson Impact Report (2022)');
-    $feature_button_text = get_theme_mod('feature_button_text', 'Sign Up');
+    $feature_button_text = get_theme_mod('feature_button_text', 'Sign Up ');
     $feature_button_link = get_theme_mod('feature_button_link', '#');
 
     $feature_image_one = get_theme_mod('feature_image_one',  get_template_directory_uri() . '/assets/img/Rectangle 10.png');
@@ -36,9 +36,18 @@ Lesson Impact Report (2022)');
                         <p class="poppins text-[18px] leading-[30px] text-[#5F5B53]"><?php echo esc_html($feature_description); ?></p>
                     <?php endif; ?>
                     <div class="">
-                        <?php if ($feature_button_text): ?>
-                            <a class="poppins bg-[#FFB900] hover:bg-[#000000] text-[18px] leading-[30px] w-[137px] h-[50px] rounded-full flex justify-center items-center text-white" target="_black" href="<?php echo esc_url($feature_button_link) ?>"><?php echo esc_html($feature_button_text); ?>
-                            </a>
+                        <?php if (is_user_logged_in()) : ?>
+                            <?php $dashboard_url = home_url('/dashboard'); ?>
+                            <a class="poppins bg-[#FFB900] hover:bg-[#000000] text-[18px] leading-[30px] w-[137px] h-[50px] rounded-full flex justify-center items-center text-white" href="<?php echo esc_url($dashboard_url); ?>">Dashboard</a>
+
+                        <?php else : ?>
+                            <?php if ($feature_button_text): ?>
+                                <a class="poppins bg-[#FFB900] hover:bg-[#000000] text-[18px] leading-[30px] w-[137px] h-[50px] rounded-full flex justify-center items-center text-white" target="_blank" href="<?php if (!empty($feature_button_link)): ?>
+                                    <?php echo esc_url($feature_button_link); ?>
+                                    <?php else: echo esc_url(wp_registration_url()); ?>
+                                    <?php endif; ?>"><?php echo esc_html($feature_button_text); ?>
+                                </a>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </div>

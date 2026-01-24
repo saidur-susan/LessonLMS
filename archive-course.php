@@ -1,19 +1,15 @@
 <?php get_header(); ?>
 <div class="container mx-auto py-[40px] md:py-[100px] px-4">
+    <div class="hero-section mx-auto">
+        <h2 class="heading sen text-[38px] leading-[48px] tracking-[0.76px] font-bold mb-[16px]">All Courses</h2>
 
 
-
-
-    <div class="mx-auto">
-        <h2 class="sen text-[38px] leading-[48px] tracking-[0.76px] font-bold mb-[16px]">All Courses</h2>
-
-
-        <p class="poppins text-[18px] leading-[30px] text-[#5F5B53] mb-[55px] max-w-[450px]"> Browse our complete
+        <p class="description poppins text-[18px] leading-[30px] text-[#5F5B53] mb-[55px] max-w-[450px]"> Browse our complete
             collection of coutses and find the perfect one for your career growth.</p>
     </div>
 
     <div class="slicks">
-        <div class="courses-wrapper flex justify-between flex-wrap items-center flex-col md:flex-row gap-y-[20px] md:gap-x-[20px] ">
+        <div class="courses-wrapper flex justify-center md:justify-start flex-wrap items-center flex-col md:flex-row gap-y-[20px] md:gap-x-[20px] ">
 
             <?php
             $courses = new WP_Query(array(
@@ -30,15 +26,17 @@
                     $price = !empty($price) ? $price : '0.00';
             ?>
                     <!-- Course 1 -->
-                    <div class="course course-1 active-btn min-h-[466px] w-[370px] bg-white rounded-[12px] shadow-lg ">
+                    <div class="course active-btn h-[466px] w-[350px] bg-white rounded-[12px] shadow-lg ">
 
-                        <?php if (has_post_thumbnail()) : ?>
-                            <?php the_post_thumbnail('full', array(
-                                'alt' => get_the_title()
-                            )); ?>
-                        <?php else : ?>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Image1.png" alt="">
-                        <?php endif; ?>
+                        <div class="course-img h-[50%] w-auto overflow-hidden object-cover">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <?php the_post_thumbnail('large', array(
+                                    'alt' => get_the_title()
+                                )); ?>
+                            <?php else : ?>
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Image1.png" alt="">
+                            <?php endif; ?>
+                        </div>
 
                         <div class="p-[16px] relative">
                             <div class="flex justify-between items-center">
@@ -77,44 +75,23 @@
     <!-- card end here -->
 
 
-    <!-- next page buttons -->
-    <div class=" next-page-buttons mt-8 w-full flex gap-x-4  justify-center items-center">
+    <!-- pagination buttons -->
+    <div class="pagination mt-8 w-full flex gap-x-4  justify-center items-center">
         <?php the_posts_pagination(array(
             'mid_size' => 2,
-            'prev_text' => __('Prev', 'lesonlms'),
-            'next_text' => __('Next', 'lesonlms')
-        )); ?>
-        <div>
-            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px] text-black hover:text-white font-bold"
-                href="#">1
-            </a>
-        </div>
-
-        <div>
-            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px] text-black hover:text-white font-bold"
-                href="#">2
-            </a>
-        </div>
-
-        <div>
-            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px] text-black hover:text-white font-bold"
-                href="#">3
-            </a>
-        </div>
-
-
-
-        <div>
-            <a class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] px-4 text-black hover:text-white font-bold"
-                href="">Next<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            'prev_text' => '<span class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] px-4 text-black hover:text-white font-bold"
+                "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="black " class="group-hover:stroke-white size-6 rotate-0">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>Prev</span>',
+            'next_text' => '<span class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] px-4 text-black hover:text-white font-bold"
+                >Next<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="black " class="group-hover:stroke-white size-6 rotate-180">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg></a>
-
-
-            </a>
-
-        </div>
+                </svg></span>',
+            'before_page_number' => '<span class="bg-[#FFFFFF] group hover:cursor-pointer flex justify-center items-center border border-[#FFB900] rounded-full hover:bg-[#FFB900] h-[40px] w-[40px] text-black hover:text-white font-bold">',
+            'after_page_number'  => '</span>'
+        )); ?>
     </div>
 </div>
 

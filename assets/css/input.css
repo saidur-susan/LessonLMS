@@ -46,7 +46,7 @@
 
 
 .btn {
-    @apply flex justify-center items-center px-6 py-2 bg-black hover:bg-[#FFB900] text-white rounded-full ml-15;
+    @apply flex justify-center items-center px-5 py-1 bg-black hover:bg-[#FFB900] text-white rounded-full ml-15 cursor-pointer;
 }
 
 /* tag css why not work */
@@ -65,4 +65,20 @@
     background-color: yellow;
     color: white;
 
+}
+
+
+/* Pagination Course page styole for display flex */
+nav.navigation>.nav-links {
+    display: flex;
+    gap: 10px;
+}
+
+nav.navigation>.nav-links>.current span {
+    background-color: #FFB900;
+}
+
+nav.navigation>.nav-links>.current span:hover {
+    cursor: default;
+    color: black;
 }
