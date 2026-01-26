@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>studend dashboard</title>
+    <link rel="stylesheet" href="assets/css/output.css">
+    <link rel="stylesheet" href="assets/css/input.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body>
+    <div class="container mx-auto py-[40px] md:py-[50px] px-4">
+        <div class=" flex justify-between border-b border-gray-400/30 py-5">
+            <p class="text-[18px] poppins leading-[28px] font-semibold">Student Learning Dashboard</p>
+            <div class="log-out btn-2">
+                <a href="">Log Out</a>
+            </div>
+        </div>
+        <h2 class="sen my-10 text-[38px] leading-[48px] tracking-[0.76px] font-bold mb-[16px]">Welcome, Name! </h2>
+        <h2 class="sen my-10 text-[28px] leading-[48px] tracking-[0.76px] font-bold mb-[16px]">My Enrolled Courses</h2>
+        <div class="course-wrapper">
+            <div class="courses py-4 flex justify-center lg:justify-between flex-wrap gap-y-10 ">
+
+                <div class="single-course relative rounded-xl w-[400px] bg-amber-300 h-[470px] shadow-2xl">
+                    <div class="image h-[50%] m-0 overflow-hidden rounded-t-xl">
+                        <img width="100%" height="100%" src="assets/img/blog-pic-2.png" alt="">
+                    </div>
+                    <div class="content   h-auto p-6 flex flex-col gap-2">
+                        <p><strong>Complete Web Design Couse</strong></p>
+                        <p class="text-sm text-gray-600">Enrolled Date: January 15, 2025 lorem30</p>
+                        <button class="absolute bottom-6 block w-full"><a href=""
+                                class="w-[355px] block py-1 rounded-sm text-white font-semibold text-center text-xl bg-lime-600 hover:bg-black">Start
+                                Learning</a></button>
+                    </div>
+                </div>
+
+                <div class="single-course relative rounded-xl w-[400px] bg-amber-300 h-[470px] shadow-2xl">
+                    <div class="image h-[50%] m-0 overflow-hidden">
+                        <img width="100%" height="100%" src="assets/img/Image1.png" alt="">
+                    </div>
+                    <div class="content   h-auto p-6 flex flex-col gap-2">
+                        <p><strong>Complete Web Design Couse</strong></p>
+                        <p class="text-sm text-gray-600">Enrolled Date: January 15, 2025 lorem30</p>
+                        <button class="absolute bottom-6 block w-full"><a href=""
+                                class="w-[355px] block py-1 rounded-sm text-white font-semibold text-center text-xl bg-lime-600 hover:bg-black">Start
+                                Learning</a></button>
+                    </div>
+                </div>
+
+                <div class="single-course relative rounded-xl w-[400px] bg-amber-300 h-[470px] shadow-2xl">
+                    <div class="image h-[50%] m-0 overflow-hidden">
+                        <img width="100%" height="100%" src="assets/img/instructor profile image.jpg" alt="">
+                    </div>
+                    <div class="content   h-auto p-6 flex flex-col gap-2 ">
+                        <p><strong>Complete Web Design Couse</strong></p>
+                        <p class="text-sm text-gray-600">Enrolled Date: January 15, 2025 lorem30</p>
+                        <button class="absolute bottom-6 block w-full"><a href=""
+                                class="w-[355px] block py-1 rounded-sm text-white font-semibold text-center text-xl bg-lime-600 hover:bg-black">Start
+                                Learning</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

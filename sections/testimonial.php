@@ -5,12 +5,13 @@
             <div class="testimonial-items">
                 <div class="testimonial-items">
                     <?php
-                    $arg = array(
+                    $args = array(
                         'post_type' => 'testimonial',
                         'post_per_page' => 1,
                         'order' => 'DESC'
                     );
-                    $testimonial_query = new WP_Query($arg);
+                    $testimonial_query = new WP_Query($args);
+
                     if ($testimonial_query->have_posts()) :
                         while ($testimonial_query->have_posts()) : $testimonial_query->the_post();
 
