@@ -191,6 +191,9 @@
   ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {
     padding-block: 0;
   }
+  ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
   :-moz-ui-invalid {
     box-shadow: none;
   }
@@ -953,6 +956,9 @@
   .py-5 {
     padding-block: calc(var(--spacing) * 5);
   }
+  .py-10 {
+    padding-block: calc(var(--spacing) * 10);
+  }
   .py-\[20px\] {
     padding-block: 20px;
   }
@@ -1051,6 +1057,14 @@
   }
   .text-\[48px\] {
     font-size: 48px;
+  }
+  .leading-7 {
+    --tw-leading: calc(var(--spacing) * 7);
+    line-height: calc(var(--spacing) * 7);
+  }
+  .leading-12 {
+    --tw-leading: calc(var(--spacing) * 12);
+    line-height: calc(var(--spacing) * 12);
   }
   .leading-\[26px\] {
     --tw-leading: 26px;
