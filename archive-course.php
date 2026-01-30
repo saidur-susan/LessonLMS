@@ -14,7 +14,7 @@
             <?php
             $courses = new WP_Query(array(
                 'post_type' => 'course',
-                'posts_per_page' => 4,
+                'posts_per_page' => 9,
             ));
             if ($courses->have_posts()):
                 while ($courses->have_posts()): $courses->the_post();
@@ -26,7 +26,7 @@
                     $price = !empty($price) ? $price : '0.00';
             ?>
                     <!-- Course 1 -->
-                    <div class="course active-btn h-[466px] w-[350px] bg-white rounded-[12px] shadow-lg ">
+                    <div class="course  h-[466px] w-[350px] bg-white rounded-[12px] shadow-lg ">
 
                         <div class="course-img h-[50%] w-auto overflow-hidden object-cover">
                             <?php if (has_post_thumbnail()) : ?>
@@ -38,7 +38,7 @@
                             <?php endif; ?>
                         </div>
 
-                        <div class="p-[16px] relative">
+                        <div class="h-[50%] flex flex-col p-4">
                             <div class="flex justify-between items-center">
                                 <h3 class="poppins text-[18px] font-semibold leading-[30px] text-[#171100] "><?php the_title(); ?></h3>
                                 <p class="inline-flex justify-between items-center"> <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@
                                 </p>
 
                             </div>
-                            <p class="poppins text-[14px] leading-[26px] text-[#5F5B53] mb-[22px]"> <?php echo wp_trim_words(get_the_excerpt(), 15); ?></p>
+                            <p class="poppins grow text-[14px] leading-[26px] text-[#5F5B53] mb-2"> <?php echo wp_trim_words(get_the_excerpt(), 15); ?></p>
 
 
                             <div class="flex justify-between items-center bottom-0">

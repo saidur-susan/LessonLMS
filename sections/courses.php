@@ -1,19 +1,11 @@
 <!-- services section starts here -->
 <div class="container mx-auto py-[40px] md:py-[100px] ">
 
-
-
-
     <div class="mx-5">
         <div class="left-heading max-w-[50%]">
             <h2 class="sen text-[38px] max-w-[450px] leading-[48px] tracking-[0.76px] font-bold mb-[16px]">Our popular courses</h2>
-
-
             <p class="poppins text-[18px] leading-[30px] text-[#5F5B53] mb-[55px] max-w-[450px]"> Build new skills with new trendy courses and shine for the next future career.</p>
         </div>
-
-
-
     </div>
 
     <!-- services card stars here -->
@@ -31,7 +23,6 @@
                     </svg>
                 </div>
             </div>
-
         </div>
 
         <!-- services card stars here -->
@@ -65,7 +56,7 @@
                                 <?php endif; ?>
                             </div>
 
-                            <div class="course-content p-[16px] relative">
+                            <div class="course-content flex flex-col h-[50%] p-4">
                                 <div class="flex justify-between items-center">
                                     <h3 class="poppins text-[18px] font-semibold leading-[30px] text-[#171100] "><?php the_title(); ?></h3>
                                     <p class="inline-flex justify-between items-center"> <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,12 +66,12 @@
                                     </p>
 
                                 </div>
-                                <p class="poppins text-[14px] leading-[26px] text-[#5F5B53] mb-[22px]"> <?php echo wp_trim_words(get_the_excerpt(), 15); ?></p>
+                                <p class="poppins text-[14px] leading-[26px] text-[#5F5B53] mb-[22px] grow"> <?php echo wp_trim_words(get_the_excerpt(), 15); ?></p>
 
                                 <div class="  flex justify-between items-center ">
                                     <h3 class="poppins text-[18px] font-semibold leading-[30px] text-[#171100] ">$<?php echo esc_html($price); ?></h3>
                                     <div class="">
-                                        <a class="poppins bg-[#171100] hover:bg-[#FFB900] text-[18px] leading-[30px] px-4 h-[50px] rounded-full flex justify-center items-center text-white" href="">Book Now</a>
+                                        <a class="poppins bg-[#171100] hover:bg-[#FFB900] text-[18px] leading-[30px] px-4 py-1 rounded-full flex justify-center items-center text-white" href="">Book Now</a>
                                     </div>
 
 
