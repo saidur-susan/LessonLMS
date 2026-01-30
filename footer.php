@@ -121,7 +121,7 @@
         <div class="mt-[38px] max-w-[1170px] h-[1px] bg-[#59554B] ">
 
         </div>
-        <p class="py-7 text-[#807D74] text-center">Copyright &copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?> All rights reserved</p>
+        <p class="py-[28px] text-[#807D74] text-center">Copyright &copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?> All rights reserved</p>
     </div>
 </div>
 
