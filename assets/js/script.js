@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-    jQuery('.courses-slider').slick({
+    jQuery('courses-slider').slick({
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
@@ -48,12 +48,12 @@ jQuery(document).ready(function () {
 
 
     /*----- blog section slick add -----*/
-    jQuery(".blog-wrapper").slick({
+    jQuery('.blog-wrapper').slick({
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
-        dots: false,
+        dots: true,
         arrows: false,
         responsive: [
             {

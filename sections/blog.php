@@ -6,75 +6,69 @@
 
         <!-- blog cards -->
 
-        <div class="slide-blog">
-            <div class="">
-                <div class="">
-                    <div class="blog-wrapper flex flex-col md:flex-row gap-y-[20px] md:gap-x-[30px] text-black">
+        <div class="slicks">
+            <div class="blog-wrapper flex flex-col items-center md:flex-row gap-7 text-black">
 
-                        <?php
-                        $posts = new WP_Query(array(
-                            'post_type' => 'post',
-                            'posts_per_page' => 3,
-                            'order' => 'DESC'
-                        ));
-                        if ($posts->have_posts()) :
-                            while ($posts->have_posts()) : $posts->the_post();
+                <?php
+                $posts = new WP_Query(array(
+                    'post_type' => 'post',
+                    'posts_per_page' => 3,
+                    'order' => 'DESC'
+                ));
+                if ($posts->have_posts()) :
+                    while ($posts->have_posts()) : $posts->the_post();
 
-                        ?>
-                                <!-- single blog -->
+                ?>
+                        <!-- single blog -->
 
-                                <div class=" mx-auto h-[430px] w-[370px] bg-white rounded-[12px] shadow-lg">
+                        <div class="single-blog my-4">
+                            <div class=" mx-auto h-[430px] w-[370px] bg-white rounded-[12px] shadow-lg">
+                                <div class="blog-image h-[60%] overflow-hidden">
                                     <a href="<?php the_permalink(); ?>">
                                         <?php
                                         if (has_post_thumbnail()) {
-                                            the_post_thumbnail('large');
+                                            the_post_thumbnail('large', array(
+                                                'alt' => get_the_title()
+                                            ));
                                         } else {
                                             echo '<img src="<?php echo get_template_directory_uri(); ?>/assets/img/blog-pic-2.png" alt="">';
                                         }
                                         ?>
                                     </a>
-                                    <div class="p-[20px]">
-                                        <div class="flex justify-between items-center ">
+                                </div>
+                                <div class="h-[40%] p-4 flex flex-col">
+                                    <div class="flex justify-between items-center">
 
-                                            <p class="inline-flex justify-between items-center"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <circle cx="3" cy="3" r="3" fill="#FFB900" />
-                                                </svg>
+                                        <p class="inline-flex justify-between items-center"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="3" cy="3" r="3" fill="#FFB900" />
+                                            </svg>
 
-                                                <span class="poppins text-[14px] leading-[26px] text-[#5F5B53] ml-2"><?php echo get_the_date('d F Y'); ?></span> <br>
-                                            </p>
+                                            <span class="poppins text-[14px] leading-[26px] text-[#5F5B53] ml-2"><?php echo get_the_date('d F Y'); ?></span> <br>
+                                        </p>
 
-                                        </div>
-                                        <p class="my-[12px]"><svg width="160" height="1" viewBox="0 0 160 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="160" height="1" rx="0.5" fill="#E2DFDA" />
-                                            </svg></p>
-                                        <h3 class="poppins text-[18px] font-semibold leading-[28px] text-[#171100] mb-[6px]"><a href="<?php the_permalink(); ?>">
-                                                <?php the_title(); ?>
-                                            </a></h3>
+                                    </div>
+                                    <p class="my-2"><svg width="160" height="1" viewBox="0 0 160 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="160" height="1" rx="0.5" fill="#E2DFDA" />
+                                        </svg></p>
+                                    <h3 class="poppins text-[18px] font-semibold leading-[28px] text-[#171100] mb-2 grow"><a href="<?php the_permalink(); ?>">
+                                            <?php the_title(); ?>
+                                        </a></h3>
 
-
-                                        <div class="flex justify-between items-center mt-[12px]">
-
-                                            <div class="">
-                                                <a class="poppins bg-[#171100] hover:bg-[#FFB900] text-[14px] leading-[30px] w-[118px] h-[50px] rounded-full flex justify-center items-center text-white font-semibold" href="<?php the_permalink(); ?>"> <?php _e('Read More', 'lessonlms'); ?></a>
-                                            </div>
-
-
-                                        </div>
+                                    <div class="flex justify-between items-center mt-3">
+                                        <a class="poppins bg-[#171100] hover:bg-[#FFB900] text-[14px] leading-[30px] w-[118px] h-[50px] rounded-full flex justify-center items-center text-white font-semibold" href="<?php the_permalink(); ?>"> <?php _e('Read More', 'lessonlms'); ?></a>
                                     </div>
                                 </div>
-                            <?php endwhile;
-                            wp_reset_postdata();
-                        else:
-                            echo '<p>' . __('No blog post found', 'lessonlms') . '</p>';
-                            ?>
+                            </div>
+                        </div>
+                    <?php endwhile;
+                    wp_reset_postdata();
+                else:
+                    echo '<p>' . __('No blog post found', 'lessonlms') . '</p>';
+                    ?>
 
-                        <?php endif; ?>
+                <?php endif; ?>
 
 
-                    </div>
-
-
-                </div>
             </div>
         </div>
 

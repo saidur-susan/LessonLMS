@@ -21,14 +21,14 @@
 
                                     <div class="left-section w-[25%] flex flex-col mx-5 md:mx-auto justify-center ">
                                         <div class="w-[72px] h-[72px] rounded-full mb-5">
-
-                                            <?php if (has_post_thumbnail()) : ?>
-                                                <img src="<?php echo the_post_thumbnail('thumbnail') ?>" alt="<?php the_title_attribute(); ?>">
-                                            <?php else: ?>
-                                                <img class="bg-cover rounded-full " src="<?php echo get_template_directory_uri(); ?>/assets/img/instructor profile image.jpg" alt="">
-
-                                            <?php endif; ?>
-
+                                            <?php
+                                            if (has_post_thumbnail()) {
+                                                the_post_thumbnail('large', array(
+                                                    'alt' => get_the_title(),
+                                                    'class' => 'w-full h-full object-cover rounded-full'
+                                                ));
+                                            }
+                                            ?>
 
                                         </div>
                                         <h3 class="text-[16px] md:text-[24px] sen leading-[34px] text-[#F7F7F7]"><?php echo the_title(); ?></h3>
