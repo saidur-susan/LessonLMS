@@ -31,13 +31,13 @@
         </div>
 
         <!-- services card stars here -->
-        <div class="slicks">
-            <div class="courses-wrapper  flex flex-col items-center md:flex-row gap-[30px] ">
+        <div class="courses">
+            <div class="courses-wrapper flex flex-col items-center md:flex-row gap-[30px] ">
 
                 <?php
                 $courses = new WP_Query(array(
                     'post_type' => 'course',
-                    'posts_per_page' => 3,
+                    'posts_per_page' => 5,
                 ));
                 if ($courses->have_posts()):
                     while ($courses->have_posts()): $courses->the_post();
@@ -49,7 +49,7 @@
                         $price = !empty($price) ? $price : '0.00';
                 ?>
                         <!-- Course 1 -->
-                        <div class="courses-slider">
+                        <div class="courses-slider my-6">
                             <div class="course course-1 active-btn h-[466px] w-[370px] bg-white rounded-[12px] shadow-xl ">
 
                                 <div class="course-image h-[50%] overflow-hidden">

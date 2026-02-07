@@ -23,7 +23,7 @@
                                         <div class="w-[72px] h-[72px] rounded-full mb-5">
                                             <?php
                                             if (has_post_thumbnail()) {
-                                                the_post_thumbnail('large', array(
+                                                the_post_thumbnail('thumbnail', array(
                                                     'alt' => get_the_title(),
                                                     'class' => 'w-full h-full object-cover rounded-full'
                                                 ));

@@ -50,8 +50,8 @@ if (isset($_POST['submit_testimonial_form']) && $_SERVER['REQUEST_METHOD'] === '
 ?>
 
 <div class="max-w-[1440px] mx-auto bg-[#FFFCF4] testimonial">
-    <div class="container flex justify-center mt-10 px-4">
-        <div class="feedback-form max-w-[450px] p-8 shadow-2xl bg-white rounded-2xl">
+    <div class="container flex justify-center my-6 px-4">
+        <div class="feedback-form max-w-[450px] p-8 shadow-2xl bg-white rounded-2xl mb-4">
             <div class="text-center">
                 <h2 class="sen text-[28px] tracking-[0.76px] font-bold mb-2">Submit Your Review</h2>
 

@@ -6,13 +6,13 @@
 
         <!-- blog cards -->
 
-        <div class="slicks">
-            <div class="blog-wrapper flex flex-col items-center md:flex-row gap-7 text-black">
+        <div class="blogs">
+            <div class="blog-wrapper my-10 flex flex-col items-center md:flex-row gap-7 text-black">
 
                 <?php
                 $posts = new WP_Query(array(
                     'post_type' => 'post',
-                    'posts_per_page' => 3,
+                    'posts_per_page' => 4,
                     'order' => 'DESC'
                 ));
                 if ($posts->have_posts()) :
@@ -51,7 +51,7 @@
                                             <rect width="160" height="1" rx="0.5" fill="#E2DFDA" />
                                         </svg></p>
                                     <h3 class="poppins text-[18px] font-semibold leading-[28px] text-[#171100] mb-2 grow"><a href="<?php the_permalink(); ?>">
-                                            <?php the_title(); ?>
+                                            <?php wp_trim_words(the_title(), 7); ?>
                                         </a></h3>
 
                                     <div class="flex justify-between items-center mt-3">
